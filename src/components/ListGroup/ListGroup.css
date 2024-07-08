@@ -1,0 +1,8 @@
+.list-group {
+    list-style: none;
+    font-family: Roboto, Arial;
+    font-size: 20px;
+    color: blue;
+    font-weight: bold;
+    padding-left: 10px;
+}

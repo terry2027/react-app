@@ -1,0 +1,13 @@
+.button {
+    background-color: rgb(5, 5, 241);
+}
+
+
+.buttonPrimary {
+    font-family: Robot, Arial;
+    font-size: 20px;
+    color: white;
+    padding: 5px;
+    align-items: center;
+    border: none;
+}
