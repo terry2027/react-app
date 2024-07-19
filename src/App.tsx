@@ -1,76 +1,42 @@
 import { useState } from "react";
-//import Alert from "./components/Alert";
-//import Button from "./components/Button";
-import Like from "./components/Like";
-import ExpandableText from "./components/ExpandableText";
-//import ListGroup from "./components/ListGroup";
-
-// function App() {
-//   const [alertVisible, setAlertVisiblity] = useState(false);
-
-//   return (
-//     <div>
-//       {alertVisible && (
-//         <Alert onClose={() => setAlertVisiblity(false)}>My Alert</Alert>
-//       )}
-//       <Button color="primary" onClick={() => setAlertVisiblity(true)}>
-//         Click Me!!!
-//       </Button>
-//     </div>
-//   );
-// }
+import Form from "./components/Form";
+import ExpenseList from "./expense-tracker/components/ExpenseList";
+import ExpenseFilter from "./expense-tracker/components/ExpenseFilter";
+import ExpenseForm from "./expense-tracker/components/ExpenseForm";
+import categories from "./expense-tracker/categories";
 
 function App() {
-  // let items = ["Singapore", "Melbourne", "Sydney"];
-  // const heading = "Cities";
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  // const [game, setGame] = useState({
-  //   id: 1,
-  //   player: {
-  //     name: "John",
-  //   },
-  // });
+  const [expenses, setExpenses] = useState([
+    { id: 1, description: "aaa", amount: 10, category: "Utilities" },
+    { id: 2, description: "bbb", amount: 10, category: "Utilities" },
+    { id: 3, description: "ccc", amount: 10, category: "Utilities" },
+    { id: 4, description: "ddd", amount: 10, category: "Utilities" },
+  ]);
 
-  //const [pizza, setPizza] = useState({
-  //   name: "Spicy Peperroni",
-  //   toppings: ["Mushroom"],
-  // });
+  const visibleExpenses = selectedCategory
+    ? expenses.filter((e) => e.category === selectedCategory)
+    : expenses;
 
-  const [cart, setCart] = useState({
-    discount: 0.1,
-    items: [
-      { id: 1, title: "Product 1", quantity: 1 },
-      { id: 2, title: "Product 2", quantity: 1 },
-    ],
-  });
-
-  const handleClick = () => {
-    //setPizza({ ...pizza, toppings: [...pizza.toppings, "Cheese"] });
-    //console.log(pizza);
-    setCart({
-      ...cart,
-      items: cart.items.map((item) =>
-        item.id === 1 ? { ...item, quantity: item.quantity + 1 } : item
-      ),
-    });
-    console.log(cart);
-  };
-
-  // return (
-  //   <div>
-  //     <Like onClick={onClick}></Like>
-  //   </div>
-  // );
-  //   return (
-  //     <div>
-  //       <button onClick={handleClick}>
-  //         Click Me {cart.items[0].quantity}!!!
-  //       </button>
-  //     </div>
-  //   );
   return (
     <div>
-      <ExpandableText>Hello Word</ExpandableText>
+      <div className="mb-5">
+        <ExpenseForm
+          onSubmit={(expense) =>
+            setExpenses([...expenses, { ...expense, id: expenses.length + 1 }])
+          }
+        />
+      </div>
+      <div className="mb-3">
+        <ExpenseFilter
+          onSelectCategory={(category) => setSelectedCategory(category)}
+        ></ExpenseFilter>
+      </div>
+      <ExpenseList
+        expenses={visibleExpenses}
+        onDelete={(id) => setExpenses(expenses.filter((e) => e.id !== id))}
+      />
     </div>
   );
 }
